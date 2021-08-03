@@ -6,6 +6,8 @@ from datetime import datetime
 
 from jinja2.utils import generate_lorem_ipsum
 
+from flask_marshmallow import Marshmallow
+
 
 
 app = Flask(__name__)
@@ -13,6 +15,16 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///usuarios.db'
 
 db = SQLAlchemy(app)
+
+ma = Marshmallow(app)
+
+class getUsuarios(ma.Schema):
+    class Meta:
+        fields = ('id','nombre','edad','genero','fecha_creada')
+
+get_usuario = getUsuarios()
+get_usuarios = getUsuarios(many=True)
+
 
 class Usuarios(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -66,4 +78,10 @@ def eliminarUsuario():
         response = "respuesta"
         return jsonify(response)
     return print('Usuario eliminado')
+
+@app.route('/getUser',methods= ['POST','GET'] )
+def getUser():
+    usuarios = Usuarios.query.order_by(Usuarios.fecha_creada)
+    result = get_usuarios.dump(usuarios)
+    return jsonify(result)
 
