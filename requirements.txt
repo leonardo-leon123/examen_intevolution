@@ -9,3 +9,4 @@ MarkupSafe==2.0.1
 SQLAlchemy==1.4.20
 Werkzeug==2.0.1
 gunicorn
+flask_marshmallow
