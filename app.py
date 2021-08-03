@@ -83,7 +83,7 @@ def eliminarUsuario():
 def getUser():
     usuarios = Usuarios.query.order_by(Usuarios.fecha_creada)
     result = get_usuarios.dump(usuarios)
-    jsonify(result)
-    result.headers.add('Access-Control-Allow-Origin', '*')
-    return result
+    response=jsonify(result)
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
