@@ -1,3 +1,4 @@
+from typing_extensions import Required
 from flask import Flask, render_template, request, jsonify
 from flask.json import jsonify
 from flask.wrappers import Response
@@ -45,6 +46,7 @@ def index():
 @app.route('/nuevoUsuario', methods = ['POST', 'GET'])
 def nuevoUsuario():
     if request.method== "POST":
+        request.headers.add('Access-Control-Allow-Origin', '*')
         usuario = request.get_json()
         nombre_usuario = usuario['nombre']
         edad_usuario = usuario['edad']
@@ -66,6 +68,7 @@ def nuevoUsuario():
 @app.route('/eliminarUsuario',methods= ['POST','GET'])
 def eliminarUsuario():
     if request.method == "POST":
+        request.headers.add('Access-Control-Allow-Origin', '*')
         usuario_eliminar = request.get_json()
         ID = usuario_eliminar[0]
         print(ID)
